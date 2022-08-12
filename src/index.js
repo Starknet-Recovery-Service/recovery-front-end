@@ -1,25 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 // 1. import `ChakraProvider` component
-import { ChakraProvider } from '@chakra-ui/react'
-import { WagmiConfig, createClient } from 'wagmi'
-import { getDefaultProvider } from 'ethers'
+import { ChakraProvider } from "@chakra-ui/react";
+import { WagmiConfig, createClient } from "wagmi";
+import { getDefaultProvider } from "ethers";
 
 const client = createClient({
   autoConnect: true,
   provider: getDefaultProvider(),
-})
+});
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-        <WagmiConfig client={client}>
-    <ChakraProvider>
-      <App />
-    </ChakraProvider>
+    <WagmiConfig client={client}>
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
     </WagmiConfig>
   </React.StrictMode>
 );
