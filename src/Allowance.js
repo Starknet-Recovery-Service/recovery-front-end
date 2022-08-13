@@ -62,7 +62,8 @@ export default function SignupCard() {
             Allowance
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool features ✌️
+            Select the currency you would like to give allowance to the recovery
+            contract
           </Text>
         </Stack>
         <Box
@@ -73,6 +74,8 @@ export default function SignupCard() {
         >
           <Stack spacing={4}>
             <Button onClick={addTicker}>Add Fake USDC Ticker</Button>
+            <Button>Retrieve Recovery Contract</Button>
+            <Text>Here's the existing recovery contract:</Text>
             <Stack spacing={10} pt={2}>
               <Button
                 loadingText="Submitting"
