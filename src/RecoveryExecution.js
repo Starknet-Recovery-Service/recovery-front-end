@@ -48,6 +48,9 @@ export default function SignupCard() {
               <Input type="text" placeholder="0x...abc" />
             </FormControl>
             <Stack spacing={10} pt={2}>
+              <Button>Call Fossil Api</Button>
+              <Button>Execute recovery on L2</Button>
+              <Button>Consume message on L1</Button>
               <Button
                 loadingText="Submitting"
                 size="lg"
@@ -57,7 +60,7 @@ export default function SignupCard() {
                   bg: "blue.500",
                 }}
               >
-                Trigger Recovery
+                Claim Asset
               </Button>
             </Stack>
             <Stack pt={6}>
