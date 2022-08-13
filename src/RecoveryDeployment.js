@@ -45,7 +45,7 @@ export default function SignupCard() {
         >
           <Stack spacing={4}>
             <FormControl id="recovery-address" isRequired>
-              <FormLabel>Define Recovery Address</FormLabel>
+              <FormLabel>Specify Recovery Address</FormLabel>
               <Input type="text" />
             </FormControl>
             <Stack spacing={10} pt={2}>
