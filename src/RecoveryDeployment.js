@@ -43,22 +43,8 @@ export default function SignupCard() {
           p={8}
         >
           <Stack spacing={4}>
-            <HStack>
-              <Box>
-                <FormControl id="firstName" isRequired>
-                  <FormLabel>First Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
-              <Box>
-                <FormControl id="lastName">
-                  <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
-            </HStack>
             <FormControl id="email" isRequired>
-              <FormLabel>Email address</FormLabel>
+              <FormLabel>Deploy Recovery C</FormLabel>
               <Input type="email" />
             </FormControl>
             <FormControl id="password" isRequired>
@@ -92,7 +78,8 @@ export default function SignupCard() {
             </Stack>
             <Stack pt={6}>
               <Text align={"center"}>
-                Already a user? <Link color={"blue.400"}>Login</Link>
+                Already deployed a recovery contract? Give token allowance to
+                the contract: <Link color={"blue.400"}>Allowance</Link>
               </Text>
             </Stack>
           </Stack>

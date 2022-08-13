@@ -18,6 +18,12 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { useStarknet, useConnectors } from "@starknet-react/core";
+import StarkConnect from "./StarkConnect";
+
+import Identicon from "identicon.js";
 
 const Links = ["Deployment", "Allowance", "Recovery"];
 
@@ -43,6 +49,11 @@ const NavLink = ({ children, setPage }: { children: ReactNode }) => (
 export default function Simple({ setPage }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const { address, isConnected } = useAccount();
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const { disconnect } = useDisconnect();
 
   return (
     <>
@@ -74,20 +85,35 @@ export default function Simple({ setPage }) {
               <Button mr={4} onClick={toggleColorMode}>
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                minW={0}
-              >
-                <Avatar
-                  size={"sm"}
-                  src={
-                    "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                  }
-                />
-              </MenuButton>
+              {address ? (
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rounded={"full"}
+                    variant={"link"}
+                    cursor={"pointer"}
+                    minW={0}
+                  >
+                    {
+                      <Avatar
+                        src={`data:image/png;base64,${new Identicon(
+                          address,
+                          420
+                        ).toString()}`}
+                        size={"sm"}
+                      />
+                    }
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem>Profile</MenuItem>
+                    <MenuDivider />
+                    <MenuItem onClick={() => disconnect()}>Disconnect</MenuItem>
+                  </MenuList>
+                </Menu>
+              ) : (
+                <Button onClick={() => connect()}>Connect Metamask</Button>
+              )}
+              <StarkConnect />
               <MenuList>
                 <MenuItem>Link 1</MenuItem>
                 <MenuItem>Link 2</MenuItem>

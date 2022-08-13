@@ -7,19 +7,25 @@ import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import { WagmiConfig, createClient } from "wagmi";
 import { getDefaultProvider } from "ethers";
+import {
+  StarknetProvider,
+  getInstalledInjectedConnectors,
+} from "@starknet-react/core";
 
 const client = createClient({
   autoConnect: true,
   provider: getDefaultProvider(),
 });
-
+const connectors = getInstalledInjectedConnectors();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <WagmiConfig client={client}>
-      <ChakraProvider>
-        <App />
-      </ChakraProvider>
+      <StarknetProvider connectors={connectors}>
+        <ChakraProvider>
+          <App />
+        </ChakraProvider>
+      </StarknetProvider>
     </WagmiConfig>
   </React.StrictMode>
 );
