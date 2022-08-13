@@ -30,7 +30,7 @@ export default function SignupCard() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Sign up
+            Recovery
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
             to enjoy all of our cool features ✌️
