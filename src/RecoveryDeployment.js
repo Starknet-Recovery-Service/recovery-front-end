@@ -30,10 +30,11 @@ export default function SignupCard() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Deployment
+            Recovery Contract Deployment
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool features ✌️
+            Please deploy a recovery contract for your EOA account using your
+            Ethereum wallet.
           </Text>
         </Stack>
         <Box
@@ -43,25 +44,9 @@ export default function SignupCard() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email" isRequired>
-              <FormLabel>Deploy Recovery C</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password" isRequired>
-              <FormLabel>Password</FormLabel>
-              <InputGroup>
-                <Input type={showPassword ? "text" : "password"} />
-                <InputRightElement h={"full"}>
-                  <Button
-                    variant={"ghost"}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
-                    }
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
+            <FormControl id="recovery-address" isRequired>
+              <FormLabel>Define Recovery Address</FormLabel>
+              <Input type="text" />
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
@@ -73,7 +58,7 @@ export default function SignupCard() {
                   bg: "blue.500",
                 }}
               >
-                Sign up
+                Deploy Recovery Contract
               </Button>
             </Stack>
             <Stack pt={6}>
