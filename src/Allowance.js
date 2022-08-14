@@ -22,38 +22,33 @@ import GatewayContract from "./GatewayContract.json";
 export default function SignupCard() {
   const [recipient, setRecipient] = useState();
   const { chain } = useNetwork();
-  // const {
-  //   data: address,
-  //   // isError: isErrorBalanceOf,
-  //   refetch,
-  // } = useContractRead({
-  //   // mode: "recklesslyUnprepared",
-  //   addressOrName: "0xCA772d547237ea000E5b2C3Ea5067b4b2412Af48",
-  //   contractInterface: GatewayContract,
-  //   functionName: "eoaToRecoveryContract",
-  //   // watch: true,
-  //   // chainId: 5,
-  //   args: ["0x34b716a2b8bfebc37322f6e33b3472d71bbc5631"],
-  // });
+  const { data: address, refetch: refetchAddress } = useContractRead({
+    addressOrName: "0xCA772d547237ea000E5b2C3Ea5067b4b2412Af48",
+    contractInterface: GatewayContract,
+    functionName: "eoaToRecoveryContract",
+    args: [recipient],
+  });
 
-  const {
-    data: usdcBalance,
-    // isError: isErrorBalanceOf,
-    refetch,
-  } = useContractRead({
-    // mode: "recklesslyUnprepared",
+  const { data: usdcBalance, refetch: fetchUsdcBalance } = useContractRead({
     addressOrName: "0xf3D16db53cFCee5d26EE29cDeeaa49215A21d345",
     contractInterface: erc20ABI,
     functionName: "balanceOf",
-    // watch: true,
-    // chainId: 5,
-    args: "0x34b716a2b8bfebc37322f6e33b3472d71bbc5631",
+    args: recipient,
   });
 
-  console.log(usdcBalance);
+  const { data: uniBalance, refetch: fetchUniBalance } = useContractRead({
+    addressOrName: "0x3E1722c57f5439b5279bA7Bd9Db37f667eAF2Bc9",
+    contractInterface: erc20ABI,
+    functionName: "balanceOf",
+    args: recipient,
+  });
 
-  // console.log(chain);
-  // console.log(address);
+  const { data: wethBalance, refetch: fetchWethBalance } = useContractRead({
+    addressOrName: "0x5E4921e55D88f1E61AcD35adE5cAfce3F3FcA7a6",
+    contractInterface: erc20ABI,
+    functionName: "balanceOf",
+    args: recipient,
+  });
   return (
     <Flex
       minH={"100vh"}
@@ -88,39 +83,39 @@ export default function SignupCard() {
             />
             <Button
               onClick={async () => {
-                refetch();
+                refetchAddress();
               }}
             >
               Retrieve Recovery Contract
             </Button>
-            {/* <Text>{address && address.toString()}</Text> */}
-            <Text>{usdcBalance && usdcBalance.toString()}</Text>
-            <Text>Here's the existing recovery contract:</Text>
-            <HStack>
-              <Text>50 USDC</Text>
-              <Button>Approve</Button>
-            </HStack>
-            <HStack>
-              <Text>100 UNI</Text>
-              <Button>Approve</Button>
-            </HStack>
-            <HStack>
-              <Text>3.5 WETH</Text>
-              <Button>Approve</Button>
-            </HStack>
-            <Stack spacing={10} pt={2}>
-              {/* <Button
-                loadingText="Submitting"
-                size="lg"
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-              >
-                Give Allowance
-              </Button> */}
-            </Stack>
+            {address !== "0x0000000000000000000000000000000000000000" ? (
+              <>
+                <Text>Here's the existing recovery contract:</Text>
+                <Text>{address && address.toString()}</Text>
+                <HStack>
+                  <Text>
+                    {usdcBalance && (usdcBalance / 1e18).toString()} USDC
+                  </Text>
+                  <Button>Approve USDC</Button>
+                </HStack>
+                <HStack>
+                  <Text>
+                    {uniBalance && (uniBalance / 1e18).toString()} UNI
+                  </Text>
+                  <Button>Approve UNI</Button>
+                </HStack>
+                <HStack>
+                  <Text>
+                    {wethBalance && (wethBalance / 1e18).toString()} WETH
+                  </Text>
+                  <Button>Approve WETH</Button>
+                </HStack>
+              </>
+            ) : (
+              <Text align={"center"}>
+                You don't have a recovery contract deployed yet.
+              </Text>
+            )}
           </Stack>
         </Box>
       </Stack>
