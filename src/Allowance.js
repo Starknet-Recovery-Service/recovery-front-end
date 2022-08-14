@@ -16,8 +16,9 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useContractRead, useNetwork, erc20ABI } from "wagmi";
+import { useContractRead, useNetwork, erc20ABI, useContractWrite } from "wagmi";
 import GatewayContract from "./GatewayContract.json";
+import { dummyCoins } from "./mappings";
 
 export default function SignupCard() {
   const [recipient, setRecipient] = useState();
@@ -30,25 +31,50 @@ export default function SignupCard() {
   });
 
   const { data: usdcBalance, refetch: fetchUsdcBalance } = useContractRead({
-    addressOrName: "0xf3D16db53cFCee5d26EE29cDeeaa49215A21d345",
+    addressOrName: dummyCoins["USDC"],
     contractInterface: erc20ABI,
     functionName: "balanceOf",
     args: recipient,
   });
 
   const { data: uniBalance, refetch: fetchUniBalance } = useContractRead({
-    addressOrName: "0x3E1722c57f5439b5279bA7Bd9Db37f667eAF2Bc9",
+    addressOrName: dummyCoins["UNI"],
     contractInterface: erc20ABI,
     functionName: "balanceOf",
     args: recipient,
   });
 
   const { data: wethBalance, refetch: fetchWethBalance } = useContractRead({
-    addressOrName: "0x5E4921e55D88f1E61AcD35adE5cAfce3F3FcA7a6",
+    addressOrName: dummyCoins["WETH"],
     contractInterface: erc20ABI,
     functionName: "balanceOf",
     args: recipient,
   });
+
+  const approveUSDC = useContractWrite({
+    mode: "recklesslyUnprepared",
+    addressOrName: dummyCoins["USDC"],
+    contractInterface: erc20ABI,
+    functionName: "approve",
+    args: [address, usdcBalance],
+  });
+
+  const approveUNI = useContractWrite({
+    mode: "recklesslyUnprepared",
+    addressOrName: dummyCoins["UNI"],
+    contractInterface: erc20ABI,
+    functionName: "approve",
+    args: [address, uniBalance],
+  });
+
+  const approveWETH = useContractWrite({
+    mode: "recklesslyUnprepared",
+    addressOrName: dummyCoins["WETH"],
+    contractInterface: erc20ABI,
+    functionName: "approve",
+    args: [address, wethBalance],
+  });
+
   return (
     <Flex
       minH={"100vh"}
@@ -81,14 +107,15 @@ export default function SignupCard() {
               placeholder="0x...abc"
               onChange={(e) => setRecipient(e.target.value)}
             />
-            <Button
+            {/* <Button
               onClick={async () => {
                 refetchAddress();
               }}
             >
               Retrieve Recovery Contract
-            </Button>
-            {address !== "0x0000000000000000000000000000000000000000" ? (
+            </Button> */}
+            {address &&
+            address !== "0x0000000000000000000000000000000000000000" ? (
               <>
                 <Text>Here's the existing recovery contract:</Text>
                 <Text>{address && address.toString()}</Text>
@@ -96,26 +123,34 @@ export default function SignupCard() {
                   <Text>
                     {usdcBalance && (usdcBalance / 1e18).toString()} USDC
                   </Text>
-                  <Button>Approve USDC</Button>
+                  <Button onClick={() => approveUSDC.write()}>
+                    Approve USDC
+                  </Button>
                 </HStack>
                 <HStack>
                   <Text>
                     {uniBalance && (uniBalance / 1e18).toString()} UNI
                   </Text>
-                  <Button>Approve UNI</Button>
+                  <Button onClick={() => approveUNI.write()}>
+                    Approve UNI
+                  </Button>
                 </HStack>
                 <HStack>
                   <Text>
                     {wethBalance && (wethBalance / 1e18).toString()} WETH
                   </Text>
-                  <Button>Approve WETH</Button>
+                  <Button onClick={() => approveWETH.write()}>
+                    Approve WETH
+                  </Button>
                 </HStack>
               </>
-            ) : (
+            ) : null}
+            {address &&
+            address === "0x0000000000000000000000000000000000000000" ? (
               <Text align={"center"}>
                 You don't have a recovery contract deployed yet.
               </Text>
-            )}
+            ) : null}
           </Stack>
         </Box>
       </Stack>
