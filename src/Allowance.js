@@ -76,7 +76,7 @@ export default function SignupCard() {
                   bg: "blue.500",
                 }}
               >
-                Allowance
+                Give Allowance
               </Button>
             </Stack>
           </Stack>

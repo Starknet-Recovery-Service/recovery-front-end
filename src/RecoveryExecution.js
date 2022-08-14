@@ -55,6 +55,25 @@ export default function SignupCard() {
               <Button>Call Fossil Api</Button>
               <Button>Execute recovery on L2</Button>
               <Button>Consume message on L1</Button>
+              <Text>Available Assets</Text>
+              <HStack>
+                <Text>50 USDC</Text>
+                <Button>Add</Button>
+              </HStack>
+              <HStack>
+                <Text>100 UNI</Text>
+                <Button>Add</Button>
+              </HStack>
+              <HStack>
+                <Text>3.5 WETH</Text>
+                <Button>Add</Button>
+              </HStack>
+              <FormControl id="recovery-address" isRequired>
+                <FormLabel>
+                  Specify ERC20 addresses (separated by commas)
+                </FormLabel>
+                <Input type="text" placeholder="0x...abc,0x...dfg,0x...xyz" />
+              </FormControl>
               <Button
                 loadingText="Submitting"
                 size="lg"
@@ -64,7 +83,7 @@ export default function SignupCard() {
                   bg: "blue.500",
                 }}
               >
-                Claim Asset
+                Claim Assets
               </Button>
             </Stack>
           </Stack>
