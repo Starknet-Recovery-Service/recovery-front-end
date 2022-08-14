@@ -21,6 +21,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import GatewayContract from "./GatewayContract.json";
 import RecoveryContract from "./RecoveryContract.json";
 import { addresses } from "./addresses.js";
+import { useStarknetCall, useStarknetInvoke } from "@starknet-react/core";
 
 export default function SignupCard() {
   const [EOA, setEOA] = useState();
@@ -56,6 +57,15 @@ export default function SignupCard() {
     functionName: "receiveFromStorageProver",
     args: [EOA, minBlocks, ""],
   });
+
+  // const readNameRes = useStarknetCall({
+  //   contract,
+  //   method: "sns_lookup_name_to_adr",
+  //   args: [encodeNameAsFelt(search)],
+  //   options: {
+  //     watch: true,
+  //   },
+  // });
 
   return (
     <Flex
