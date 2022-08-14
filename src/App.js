@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import { useEffect, useState } from "react";
 import "./App.css";
 import Nav from "./Nav";
+import About from "./About";
 import RecoveryDeployment from "./RecoveryDeployment";
 import RecoveryExecution from "./RecoveryExecution";
 import Allowance from "./Allowance";
@@ -16,6 +17,8 @@ function App() {
       return <Allowance />;
     } else if (page === "recovery") {
       return <RecoveryExecution />;
+    } else if (page === "about") {
+      return <About />;
     }
   };
   return (

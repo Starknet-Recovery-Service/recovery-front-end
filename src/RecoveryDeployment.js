@@ -48,6 +48,10 @@ export default function SignupCard() {
               <FormLabel>Specify Recovery Address</FormLabel>
               <Input type="text" />
             </FormControl>
+            <FormControl id="recovery-address" isRequired>
+              <FormLabel>Specify the minimum duration</FormLabel>
+              <Input type="text" />
+            </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
                 loadingText="Submitting"

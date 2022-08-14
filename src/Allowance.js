@@ -18,37 +18,6 @@ import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function SignupCard() {
-  const addTicker = async () => {
-    const tokenAddress = "0x230A7B9Fa6d65693252C16b04165781722637578";
-    const tokenSymbol = "USDC";
-    const tokenDecimals = 18;
-    const tokenImage = "";
-
-    try {
-      // wasAdded is a boolean. Like any RPC method, an error may be thrown.
-      const wasAdded = await window.ethereum.request({
-        method: "wallet_watchAsset",
-        params: {
-          type: "ERC20", // Initially only supports ERC20, but eventually more!
-          options: {
-            address: tokenAddress, // The address that the token is at.
-            symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
-            decimals: tokenDecimals, // The number of decimals in the token
-            image: tokenImage, // A string url of the token logo
-          },
-        },
-      });
-
-      if (wasAdded) {
-        console.log("Thanks for your interest!");
-      } else {
-        console.log("Your loss!");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <Flex
       minH={"100vh"}
@@ -79,7 +48,6 @@ export default function SignupCard() {
             <Input type="text" placeholder="0x...abc" />
             <Button>Retrieve Recovery Contract</Button>
             <Text>Here's the existing recovery contract:</Text>
-            {/* <Button onClick={addTicker}>Add Fake USDC Ticker</Button> */}
             <HStack>
               <Text>50 USDC</Text>
               <Button>Add</Button>

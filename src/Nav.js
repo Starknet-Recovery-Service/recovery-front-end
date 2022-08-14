@@ -25,7 +25,7 @@ import StarkConnect from "./StarkConnect";
 
 import Identicon from "identicon.js";
 
-const Links = ["Deployment", "Allowance", "Recovery"];
+const Links = ["Deployment", "Allowance", "Recovery", "About"];
 
 const NavLink = ({ children, setPage }: { children: ReactNode }) => (
   <Link
