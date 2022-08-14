@@ -112,7 +112,9 @@ export default function Simple({ setPage }) {
                   </MenuList>
                 </Menu>
               ) : (
-                <Button onClick={() => connect()}>Connect Metamask</Button>
+                <Button onClick={() => connect()} mr="5" colorScheme="green">
+                  Connect Metamask
+                </Button>
               )}
               <StarkConnect />
               <MenuList>
