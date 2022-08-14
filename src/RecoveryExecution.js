@@ -20,11 +20,12 @@ import { useContractRead, useNetwork, erc20ABI, useContractWrite } from "wagmi";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import GatewayContract from "./GatewayContract.json";
 import RecoveryContract from "./RecoveryContract.json";
+import { addresses } from "./addresses.js";
 
 export default function SignupCard() {
   const [EOA, setEOA] = useState();
   const { data: recoveryAddress, refetch: refetchAddress } = useContractRead({
-    addressOrName: "0xCA772d547237ea000E5b2C3Ea5067b4b2412Af48",
+    addressOrName: addresses.GateWayContractAddress,
     contractInterface: GatewayContract,
     functionName: "eoaToRecoveryContract",
     args: [EOA],
@@ -46,6 +47,14 @@ export default function SignupCard() {
     addressOrName: recoveryAddress,
     contractInterface: RecoveryContract,
     functionName: "isActive",
+  });
+
+  const executeOnL1 = useContractWrite({
+    mode: "recklesslyUnprepared",
+    addressOrName: addresses.GateWayContractAddress,
+    contractInterface: GatewayContract,
+    functionName: "receiveFromStorageProver",
+    args: [EOA, minBlocks, ""],
   });
 
   return (
@@ -91,7 +100,9 @@ export default function SignupCard() {
                 <Stack spacing={10} pt={2}>
                   <Button>Call Fossil Api</Button>
                   <Button>Execute recovery on L2</Button>
-                  <Button>Activate recovery contract on L1</Button>
+                  <Button onClick={() => executeOnL1.write()}>
+                    Consume Message on L1
+                  </Button>
                 </Stack>
               </>
             ) : null}

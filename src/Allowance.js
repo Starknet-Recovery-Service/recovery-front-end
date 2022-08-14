@@ -19,12 +19,13 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useContractRead, useNetwork, erc20ABI, useContractWrite } from "wagmi";
 import GatewayContract from "./GatewayContract.json";
 import { dummyCoins } from "./mappings";
+import { addresses } from "./addresses.js";
 
 export default function SignupCard() {
   const [recipient, setRecipient] = useState();
   const { chain } = useNetwork();
   const { data: address, refetch: refetchAddress } = useContractRead({
-    addressOrName: "0xCA772d547237ea000E5b2C3Ea5067b4b2412Af48",
+    addressOrName: addresses.GateWayContractAddress,
     contractInterface: GatewayContract,
     functionName: "eoaToRecoveryContract",
     args: [recipient],

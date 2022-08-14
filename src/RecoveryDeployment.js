@@ -18,6 +18,7 @@ import { useState } from "react";
 import { useContractWrite, useNetwork } from "wagmi";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import GatewayContract from "./GatewayContract.json";
+import { addresses } from "./addresses.js";
 
 export default function SignupCard() {
   const [recipient, setRecipient] = useState();
@@ -25,7 +26,7 @@ export default function SignupCard() {
 
   const deployContract = useContractWrite({
     mode: "recklesslyUnprepared",
-    addressOrName: "0xCA772d547237ea000E5b2C3Ea5067b4b2412Af48",
+    addressOrName: addresses.GateWayContractAddress,
     contractInterface: GatewayContract,
     functionName: "deployRecoveryContract",
     args: [recipient, duration],
