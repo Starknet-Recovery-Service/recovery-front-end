@@ -101,6 +101,7 @@ export default function Simple({ setPage }) {
                           420
                         ).toString()}`}
                         size={"sm"}
+                        mr="5"
                       />
                     }
                   </MenuButton>

@@ -24,7 +24,7 @@ export default function ConnectWallet() {
         <Button
           key={connector.id()}
           onClick={() => connect(connector)}
-          colorScheme="orange"
+          // colorScheme="orange"
         >
           {`Connect ${connector.name()}`}
         </Button>
