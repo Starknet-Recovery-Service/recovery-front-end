@@ -49,9 +49,10 @@ export default function SignupCard() {
               <Input type="text" />
             </FormControl>
             <FormControl id="recovery-address" isRequired>
-              <FormLabel>Specify the minimum duration</FormLabel>
-              <Input type="text" />
+              <FormLabel>Specify the minimum duration (# of blocks)</FormLabel>
+              <Input type="text" placeholder="1000000" />
             </FormControl>
+            <Text align="left">2.5m blocks roughly equals 1 year</Text>
             <Stack spacing={10} pt={2}>
               <Button
                 loadingText="Submitting"
