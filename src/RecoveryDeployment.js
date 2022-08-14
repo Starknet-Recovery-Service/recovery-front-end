@@ -52,7 +52,10 @@ export default function SignupCard() {
               <FormLabel>Specify the minimum duration (# of blocks)</FormLabel>
               <Input type="text" placeholder="1000000" />
             </FormControl>
-            <Text align="left">2.5m blocks roughly equals 1 year</Text>
+            <Text align="left" as="i">
+              1 block is around 13 seconds on Ethereum. 2.5m blocks roughly
+              equals to 1 year.
+            </Text>
             <Stack spacing={10} pt={2}>
               <Button
                 loadingText="Submitting"
