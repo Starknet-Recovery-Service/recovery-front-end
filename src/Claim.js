@@ -11,6 +11,7 @@ import {
   Button,
   Heading,
   Text,
+  VStack,
   useColorModeValue,
   Link,
 } from "@chakra-ui/react";
@@ -22,8 +23,16 @@ import RecoveryContract from "./RecoveryContract.json";
 import { dummyCoins } from "./mappings";
 
 export default function SignupCard() {
-  const [recoveryAddress, setRecoveryAddress] = useState();
+  const [EOA, setEOA] = useState();
   const { chain } = useNetwork();
+
+  const { data: recoveryAddress, refetch: refetchAddress } = useContractRead({
+    addressOrName: "0xCA772d547237ea000E5b2C3Ea5067b4b2412Af48",
+    contractInterface: GatewayContract,
+    functionName: "eoaToRecoveryContract",
+    args: [EOA],
+  });
+
   const { data: recipient, refetch: refetchRecipient } = useContractRead({
     addressOrName: recoveryAddress,
     contractInterface: RecoveryContract,
@@ -34,21 +43,21 @@ export default function SignupCard() {
     addressOrName: dummyCoins["USDC"],
     contractInterface: erc20ABI,
     functionName: "allowance",
-    args: ["0x34B716A2B8bFeBC37322f6E33b3472D71BBc5631", recoveryAddress],
+    args: [EOA, recoveryAddress],
   });
 
   const { data: uniBalance, refetch: fetchUniBalance } = useContractRead({
     addressOrName: dummyCoins["UNI"],
     contractInterface: erc20ABI,
     functionName: "allowance",
-    args: ["0x34B716A2B8bFeBC37322f6E33b3472D71BBc5631", recoveryAddress],
+    args: [EOA, recoveryAddress],
   });
 
   const { data: wethBalance, refetch: fetchWethBalance } = useContractRead({
     addressOrName: dummyCoins["WETH"],
     contractInterface: erc20ABI,
     functionName: "allowance",
-    args: ["0x34B716A2B8bFeBC37322f6E33b3472D71BBc5631", recoveryAddress],
+    args: [EOA, recoveryAddress],
   });
 
   const claimUSDC = useContractWrite({
@@ -106,31 +115,35 @@ export default function SignupCard() {
             <Input
               type="text"
               placeholder="0x...abc"
-              onChange={(e) => setRecoveryAddress(e.target.value)}
+              onChange={(e) => setEOA(e.target.value)}
             />
           </Stack>
           {recipient ? (
             <>
-              <Text>
-                Here's the designated recipient of the recovery contract:
-              </Text>
+              <Text mt="5">Recovery contract:</Text>
+              <Text>{recoveryAddress && recoveryAddress.toString()}</Text>
+              <Text mt="5">Recipient of the recovery contract:</Text>
               <Text>{recipient && recipient.toString()}</Text>
-              <HStack>
-                <Text>
-                  {usdcBalance && (usdcBalance / 1e18).toString()} USDC
-                </Text>
-                <Button onClick={() => claimUSDC.write()}>Claim USDC</Button>
-              </HStack>
-              <HStack>
-                <Text>{uniBalance && (uniBalance / 1e18).toString()} UNI</Text>
-                <Button onClick={() => claimUNI.write()}>Claim UNI</Button>
-              </HStack>
-              <HStack>
-                <Text>
-                  {wethBalance && (wethBalance / 1e18).toString()} WETH
-                </Text>
-                <Button onClick={() => claimWETH.write()}>Claim WETH</Button>
-              </HStack>
+              <VStack align="left">
+                <HStack mt="5">
+                  <Text>
+                    {usdcBalance && (usdcBalance / 1e18).toString()} USDC
+                  </Text>
+                  <Button onClick={() => claimUSDC.write()}>Claim USDC</Button>
+                </HStack>
+                <HStack>
+                  <Text>
+                    {uniBalance && (uniBalance / 1e18).toString()} UNI
+                  </Text>
+                  <Button onClick={() => claimUNI.write()}>Claim UNI</Button>
+                </HStack>
+                <HStack>
+                  <Text>
+                    {wethBalance && (wethBalance / 1e18).toString()} WETH
+                  </Text>
+                  <Button onClick={() => claimWETH.write()}>Claim WETH</Button>
+                </HStack>
+              </VStack>
             </>
           ) : null}
         </Box>
