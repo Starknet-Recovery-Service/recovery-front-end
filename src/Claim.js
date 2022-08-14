@@ -33,22 +33,22 @@ export default function SignupCard() {
   const { data: usdcBalance, refetch: fetchUsdcBalance } = useContractRead({
     addressOrName: dummyCoins["USDC"],
     contractInterface: erc20ABI,
-    functionName: "balanceOf",
-    args: recoveryAddress,
+    functionName: "allowance",
+    args: ["0x34B716A2B8bFeBC37322f6E33b3472D71BBc5631", recoveryAddress],
   });
 
   const { data: uniBalance, refetch: fetchUniBalance } = useContractRead({
     addressOrName: dummyCoins["UNI"],
     contractInterface: erc20ABI,
-    functionName: "balanceOf",
-    args: recoveryAddress,
+    functionName: "allowance",
+    args: ["0x34B716A2B8bFeBC37322f6E33b3472D71BBc5631", recoveryAddress],
   });
 
   const { data: wethBalance, refetch: fetchWethBalance } = useContractRead({
     addressOrName: dummyCoins["WETH"],
     contractInterface: erc20ABI,
-    functionName: "balanceOf",
-    args: recoveryAddress,
+    functionName: "allowance",
+    args: ["0x34B716A2B8bFeBC37322f6E33b3472D71BBc5631", recoveryAddress],
   });
 
   const claimUSDC = useContractWrite({
