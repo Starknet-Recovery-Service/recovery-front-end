@@ -6,6 +6,7 @@ import About from "./About";
 import RecoveryDeployment from "./RecoveryDeployment";
 import RecoveryExecution from "./RecoveryExecution";
 import Allowance from "./Allowance";
+import Claim from "./Claim";
 
 function App() {
   const [page, setPage] = useState("deployment");
@@ -19,6 +20,8 @@ function App() {
       return <RecoveryExecution />;
     } else if (page === "about") {
       return <About />;
+    } else if (page === "claim") {
+      return <Claim />;
     }
   };
   return (
