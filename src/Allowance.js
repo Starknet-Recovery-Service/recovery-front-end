@@ -73,9 +73,31 @@ export default function SignupCard() {
           p={8}
         >
           <Stack spacing={4}>
-            <Button onClick={addTicker}>Add Fake USDC Ticker</Button>
+            <FormLabel>
+              Please enter the EOA you would like to recover:
+            </FormLabel>
+            <Input type="text" placeholder="0x...abc" />
             <Button>Retrieve Recovery Contract</Button>
             <Text>Here's the existing recovery contract:</Text>
+            {/* <Button onClick={addTicker}>Add Fake USDC Ticker</Button> */}
+            <HStack>
+              <Text>50 USDC</Text>
+              <Button>Add</Button>
+            </HStack>
+            <HStack>
+              <Text>100 UNI</Text>
+              <Button>Add</Button>
+            </HStack>
+            <HStack>
+              <Text>3.5 WETH</Text>
+              <Button>Add</Button>
+            </HStack>
+            <FormControl id="recovery-address" isRequired>
+              <FormLabel>
+                Specify ERC20 addresses (separated by commas)
+              </FormLabel>
+              <Input type="text" placeholder="0x...abc,0x...dfg,0x...xyz" />
+            </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
                 loadingText="Submitting"

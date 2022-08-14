@@ -47,6 +47,10 @@ export default function SignupCard() {
               <FormLabel>Wallet address</FormLabel>
               <Input type="text" placeholder="0x...abc" />
             </FormControl>
+            <Button>Check Activity</Button>
+            <Text>Last Activity on: 08/14/2022 10:30pt</Text>
+            <Text>Eligible for recovery</Text>
+            <Text>Recipient: 0x....</Text>
             <Stack spacing={10} pt={2}>
               <Button>Call Fossil Api</Button>
               <Button>Execute recovery on L2</Button>
@@ -62,11 +66,6 @@ export default function SignupCard() {
               >
                 Claim Asset
               </Button>
-            </Stack>
-            <Stack pt={6}>
-              <Text align={"center"}>
-                Already a user? <Link color={"blue.400"}>Login</Link>
-              </Text>
             </Stack>
           </Stack>
         </Box>
