@@ -34,14 +34,14 @@ export default function SignupCard() {
   return (
     <Flex
       minH={"100vh"}
-      align={"center"}
+      // align={"center"}
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Recovery Contract Deployment
+            Recovery Deployment
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
             Please deploy a recovery contract for your EOA account using your
@@ -99,7 +99,7 @@ export default function SignupCard() {
             <Stack pt={6}>
               <Text align={"center"}>
                 Already deployed a recovery contract? Give token allowance to
-                the contract: <Link color={"blue.400"}>Allowance</Link>
+                the recovery contract.
               </Text>
             </Stack>
           </Stack>
