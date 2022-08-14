@@ -109,8 +109,7 @@ export default function SignupCard() {
         >
           <Stack spacing={4}>
             <FormLabel>
-              Please enter the recovery contract you would like claim asssets
-              from:
+              Please enter the wallet address you want to recover from:
             </FormLabel>
             <Input
               type="text"

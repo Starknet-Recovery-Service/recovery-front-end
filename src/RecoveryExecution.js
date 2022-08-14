@@ -8,6 +8,7 @@ import {
   HStack,
   InputRightElement,
   Stack,
+  VStack,
   Button,
   Heading,
   Text,
@@ -15,10 +16,37 @@ import {
   Link,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useContractRead, useNetwork, erc20ABI, useContractWrite } from "wagmi";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import GatewayContract from "./GatewayContract.json";
+import RecoveryContract from "./RecoveryContract.json";
 
 export default function SignupCard() {
-  const [showPassword, setShowPassword] = useState(false);
+  const [EOA, setEOA] = useState();
+  const { data: recoveryAddress, refetch: refetchAddress } = useContractRead({
+    addressOrName: "0xCA772d547237ea000E5b2C3Ea5067b4b2412Af48",
+    contractInterface: GatewayContract,
+    functionName: "eoaToRecoveryContract",
+    args: [EOA],
+  });
+
+  const { data: recipient, refetch: refetchRecipient } = useContractRead({
+    addressOrName: recoveryAddress,
+    contractInterface: RecoveryContract,
+    functionName: "recipient",
+  });
+
+  const { data: minBlocks } = useContractRead({
+    addressOrName: recoveryAddress,
+    contractInterface: RecoveryContract,
+    functionName: "minBlocks",
+  });
+
+  const { data: isActive } = useContractRead({
+    addressOrName: recoveryAddress,
+    contractInterface: RecoveryContract,
+    functionName: "isActive",
+  });
 
   return (
     <Flex
@@ -43,19 +71,30 @@ export default function SignupCard() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="EOA-address" isRequired>
-              <FormLabel>Wallet address</FormLabel>
-              <Input type="text" placeholder="0x...abc" />
-            </FormControl>
-            <Button>Check Activity</Button>
-            <Text>Last Activity on: 08/14/2022 10:30pt</Text>
-            <Text>Eligible for recovery</Text>
-            <Text>Recipient: 0x....</Text>
-            <Stack spacing={10} pt={2}>
-              <Button>Call Fossil Api</Button>
-              <Button>Execute recovery on L2</Button>
-              <Button>Consume message on L1</Button>
+            <Stack spacing={4}>
+              <FormLabel>
+                Please enter the wallet address you want to recover from:
+              </FormLabel>
+              <Input
+                type="text"
+                placeholder="0x...abc"
+                onChange={(e) => setEOA(e.target.value)}
+              />
             </Stack>
+            {recipient ? (
+              <>
+                <VStack>
+                  <Text>Recovery Contract: {recoveryAddress.toString()}</Text>
+                  <Text>Minimum Blocks: {minBlocks.toString()}</Text>
+                  <Text>isActive: {isActive.toString()}</Text>
+                </VStack>
+                <Stack spacing={10} pt={2}>
+                  <Button>Call Fossil Api</Button>
+                  <Button>Execute recovery on L2</Button>
+                  <Button>Activate recovery contract on L1</Button>
+                </Stack>
+              </>
+            ) : null}
           </Stack>
         </Box>
       </Stack>
