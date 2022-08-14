@@ -5,17 +5,30 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 // 1. import `ChakraProvider` component
 import { ChakraProvider } from "@chakra-ui/react";
-import { WagmiConfig, createClient } from "wagmi";
+import { WagmiConfig, createClient, chain, configureChains } from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
 import { getDefaultProvider } from "ethers";
 import {
   StarknetProvider,
   getInstalledInjectedConnectors,
 } from "@starknet-react/core";
 
+// const client = createClient({
+//   autoConnect: true,
+//   provider: getDefaultProvider(),
+// });
+
+const { chains, provider, webSocketProvider } = configureChains(
+  [chain.goerli],
+  [publicProvider()]
+);
+
 const client = createClient({
   autoConnect: true,
-  provider: getDefaultProvider(),
+  provider,
+  webSocketProvider,
 });
+
 const connectors = getInstalledInjectedConnectors();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -14,10 +14,46 @@ import {
   useColorModeValue,
   Link,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useContractRead, useNetwork, erc20ABI } from "wagmi";
+import GatewayContract from "./GatewayContract.json";
 
 export default function SignupCard() {
+  const [recipient, setRecipient] = useState();
+  const { chain } = useNetwork();
+  // const {
+  //   data: address,
+  //   // isError: isErrorBalanceOf,
+  //   refetch,
+  // } = useContractRead({
+  //   // mode: "recklesslyUnprepared",
+  //   addressOrName: "0xCA772d547237ea000E5b2C3Ea5067b4b2412Af48",
+  //   contractInterface: GatewayContract,
+  //   functionName: "eoaToRecoveryContract",
+  //   // watch: true,
+  //   // chainId: 5,
+  //   args: ["0x34b716a2b8bfebc37322f6e33b3472d71bbc5631"],
+  // });
+
+  const {
+    data: usdcBalance,
+    // isError: isErrorBalanceOf,
+    refetch,
+  } = useContractRead({
+    // mode: "recklesslyUnprepared",
+    addressOrName: "0xf3D16db53cFCee5d26EE29cDeeaa49215A21d345",
+    contractInterface: erc20ABI,
+    functionName: "balanceOf",
+    // watch: true,
+    // chainId: 5,
+    args: "0x34b716a2b8bfebc37322f6e33b3472d71bbc5631",
+  });
+
+  console.log(usdcBalance);
+
+  // console.log(chain);
+  // console.log(address);
   return (
     <Flex
       minH={"100vh"}
@@ -45,29 +81,35 @@ export default function SignupCard() {
             <FormLabel>
               Please enter the EOA you would like to recover:
             </FormLabel>
-            <Input type="text" placeholder="0x...abc" />
-            <Button>Retrieve Recovery Contract</Button>
+            <Input
+              type="text"
+              placeholder="0x...abc"
+              onChange={(e) => setRecipient(e.target.value)}
+            />
+            <Button
+              onClick={async () => {
+                refetch();
+              }}
+            >
+              Retrieve Recovery Contract
+            </Button>
+            {/* <Text>{address && address.toString()}</Text> */}
+            <Text>{usdcBalance && usdcBalance.toString()}</Text>
             <Text>Here's the existing recovery contract:</Text>
             <HStack>
               <Text>50 USDC</Text>
-              <Button>Add</Button>
+              <Button>Approve</Button>
             </HStack>
             <HStack>
               <Text>100 UNI</Text>
-              <Button>Add</Button>
+              <Button>Approve</Button>
             </HStack>
             <HStack>
               <Text>3.5 WETH</Text>
-              <Button>Add</Button>
+              <Button>Approve</Button>
             </HStack>
-            <FormControl id="recovery-address" isRequired>
-              <FormLabel>
-                Specify ERC20 addresses (separated by commas)
-              </FormLabel>
-              <Input type="text" placeholder="0x...abc,0x...dfg,0x...xyz" />
-            </FormControl>
             <Stack spacing={10} pt={2}>
-              <Button
+              {/* <Button
                 loadingText="Submitting"
                 size="lg"
                 bg={"blue.400"}
@@ -77,7 +119,7 @@ export default function SignupCard() {
                 }}
               >
                 Give Allowance
-              </Button>
+              </Button> */}
             </Stack>
           </Stack>
         </Box>

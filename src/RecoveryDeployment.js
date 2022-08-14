@@ -15,10 +15,21 @@ import {
   Link,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useContractWrite, useNetwork } from "wagmi";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import GatewayContract from "./GatewayContract.json";
 
 export default function SignupCard() {
-  const [showPassword, setShowPassword] = useState(false);
+  const [recipient, setRecipient] = useState();
+  const [duration, setDuration] = useState();
+
+  const deployContract = useContractWrite({
+    mode: "recklesslyUnprepared",
+    addressOrName: "0xCA772d547237ea000E5b2C3Ea5067b4b2412Af48",
+    contractInterface: GatewayContract,
+    functionName: "deployRecoveryContract",
+    args: [recipient, duration],
+  });
 
   return (
     <Flex
@@ -46,11 +57,23 @@ export default function SignupCard() {
           <Stack spacing={4}>
             <FormControl id="recovery-address" isRequired>
               <FormLabel>Specify Recovery Address</FormLabel>
-              <Input type="text" placeholder="0x...abc" />
+              <Input
+                type="text"
+                placeholder="0x...abc"
+                onChange={(e) => {
+                  setRecipient(e.target.value);
+                }}
+              />
             </FormControl>
             <FormControl id="recovery-address" isRequired>
               <FormLabel>Specify the minimum duration (# of blocks)</FormLabel>
-              <Input type="text" placeholder="1000000" />
+              <Input
+                type="text"
+                placeholder="1000000"
+                onChange={(e) => {
+                  setDuration(e.target.value);
+                }}
+              />
             </FormControl>
             <Text align="left" as="i">
               1 block is around 13 seconds on Ethereum. 2.5m blocks roughly
@@ -64,6 +87,10 @@ export default function SignupCard() {
                 color={"white"}
                 _hover={{
                   bg: "blue.500",
+                }}
+                onClick={() => {
+                  console.log(recipient, duration);
+                  deployContract.write();
                 }}
               >
                 Deploy Recovery Contract
