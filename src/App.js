@@ -1,5 +1,6 @@
 import logo from "./logo.svg";
 import { useEffect, useState } from "react";
+import { Box } from "@chakra-ui/react";
 import "./App.css";
 import Nav from "./Nav";
 import About from "./About";
@@ -25,10 +26,10 @@ function App() {
     }
   };
   return (
-    <div className="App">
+    <Box className="App">
       <Nav setPage={setPage} />
-      {renderPage()}
-    </div>
+      <Box>{renderPage()}</Box>
+    </Box>
   );
 }
 

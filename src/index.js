@@ -17,6 +17,7 @@ import {
 //   autoConnect: true,
 //   provider: getDefaultProvider(),
 // });
+const connectors = getInstalledInjectedConnectors();
 
 const { chains, provider, webSocketProvider } = configureChains(
   [chain.goerli],
@@ -29,17 +30,16 @@ const client = createClient({
   webSocketProvider,
 });
 
-const connectors = getInstalledInjectedConnectors();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <WagmiConfig client={client}>
-      <StarknetProvider connectors={connectors}>
+    <StarknetProvider connectors={connectors}>
+      <WagmiConfig client={client}>
         <ChakraProvider>
           <App />
         </ChakraProvider>
-      </StarknetProvider>
-    </WagmiConfig>
+      </WagmiConfig>
+    </StarknetProvider>
   </React.StrictMode>
 );
 

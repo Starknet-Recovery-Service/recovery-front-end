@@ -1,5 +1,14 @@
 import React from "react";
-import { HStack, Box, Button, Text, Link } from "@chakra-ui/react";
+import {
+  VStack,
+  HStack,
+  Box,
+  Button,
+  Text,
+  Link,
+  useColorModeValue,
+  Flex,
+} from "@chakra-ui/react";
 
 export default function About() {
   const addTicker = async (ticker) => {
@@ -42,12 +51,16 @@ export default function About() {
     }
   };
   return (
-    <div>
-      <Box mt="5">
+    <Flex
+      bg={useColorModeValue("gray.50", "gray.800")}
+      flexDirection="column"
+      minH={"100vh"}
+    >
+      <Box mt="5" justifyContent="center" align="center">
         <Text fontWeight="bold" fontSize="2xl">
           Starknet Recovery Service
         </Text>
-        <Text mt="5">
+        <Text mt="5" maxW="1000" textAlign="center">
           StarkNet Recovery Service (SRS) is a fully trustless wallet recovery
           service for Ethereum L1 EOAs, powered by storage proofs on StarkNet.
           Unlike social recovery and other off-chain methods for wallet
@@ -55,8 +68,9 @@ export default function About() {
           allows users to build more fault tolerant wallet setups, while
           retaining the strong security guarantees of Ethereum.
         </Text>
-        <Box mt="5">
-          <Text fontWeight="bold">
+        <VStack mt="5">
+          {" "}
+          <Text as="i">
             <Link
               target="_blank"
               href="https://github.com/Starknet-Recovery-Service"
@@ -64,7 +78,7 @@ export default function About() {
               Link to Github
             </Link>
           </Text>
-          <Text fontWeight="bold">
+          <Text as="i">
             <Link
               target="_blank"
               href="https://app.pitch.com/app/presentation/09ce2e68-01a6-42e2-a195-f5e548aea711/06a878ce-878b-4a1f-9be1-9e125372f4f4/4566340e-b395-453e-bba3-35bd938f0e9b"
@@ -72,7 +86,7 @@ export default function About() {
               Link to Presentation
             </Link>
           </Text>
-        </Box>
+        </VStack>
       </Box>
       <Box mt="5">
         <Text fontWeight="bold">
@@ -102,8 +116,8 @@ export default function About() {
         <Link href="https://twitter.com/PourjafarNima/" target="_blank">
           @PourjafarNima
         </Link>{" "}
-        During the Starknet House Hackathon 2022.
+        during the Starknet House Hackathon 2022.
       </Text>
-    </div>
+    </Flex>
   );
 }
