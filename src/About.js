@@ -44,7 +44,10 @@ export default function About() {
   return (
     <div>
       <Box mt="5">
-        <Text>
+        <Text fontWeight="bold" fontSize="2xl">
+          Starknet Recovery Service
+        </Text>
+        <Text mt="5">
           StarkNet Recovery Service (SRS) is a fully trustless wallet recovery
           service for Ethereum L1 EOAs, powered by storage proofs on StarkNet.
           Unlike social recovery and other off-chain methods for wallet
@@ -53,35 +56,54 @@ export default function About() {
           retaining the strong security guarantees of Ethereum.
         </Text>
         <Box mt="5">
-          <Text>
+          <Text fontWeight="bold">
             <Link
               target="_blank"
               href="https://github.com/Starknet-Recovery-Service"
             >
-              Github
+              Link to Github
             </Link>
           </Text>
-          <Text>
+          <Text fontWeight="bold">
             <Link
               target="_blank"
               href="https://app.pitch.com/app/presentation/09ce2e68-01a6-42e2-a195-f5e548aea711/06a878ce-878b-4a1f-9be1-9e125372f4f4/4566340e-b395-453e-bba3-35bd938f0e9b"
             >
-              Presentation
+              Link to Presentation
             </Link>
           </Text>
         </Box>
       </Box>
       <Box mt="5">
+        <Text fontWeight="bold">
+          Feel free to test the recovery process with dummy ERC-20 on the Goerli
+          Network:
+        </Text>
         <Text>USDC: 0xf3D16db53cFCee5d26EE29cDeeaa49215A21d345</Text>
         <Text>UNI: 0x3E1722c57f5439b5279bA7Bd9Db37f667eAF2Bc9</Text>
         <Text>WETH: 0x5E4921e55D88f1E61AcD35adE5cAfce3F3FcA7a6</Text>
       </Box>
       <Text mt="5">Click to import tokens to your Metamask:</Text>
       <HStack justifyContent="center" mt="5">
-        <Button onClick={() => addTicker("USDC")}>Add Fake USDC Ticker</Button>
-        <Button onClick={() => addTicker("UNI")}>Add Fake UNI Ticker</Button>
-        <Button onClick={() => addTicker("WETH")}>Add Fake WETH Ticker</Button>
+        <Button onClick={() => addTicker("USDC")}>Import USDC Ticker</Button>
+        <Button onClick={() => addTicker("UNI")}>Import UNI Ticker</Button>
+        <Button onClick={() => addTicker("WETH")}>Import WETH Ticker</Button>
       </HStack>
+      <Text mt="5">
+        Built by{" "}
+        <Link href="https://twitter.com/remi_gai/" target="_blank">
+          @remi_gai
+        </Link>
+        ,{" "}
+        <Link href="https://twitter.com/park_eth/" target="_blank">
+          @park_eth
+        </Link>{" "}
+        and{" "}
+        <Link href="https://twitter.com/PourjafarNima/" target="_blank">
+          @PourjafarNima
+        </Link>{" "}
+        During the Starknet House Hackathon 2022.
+      </Text>
     </div>
   );
 }
