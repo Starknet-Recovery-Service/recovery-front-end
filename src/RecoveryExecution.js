@@ -39,7 +39,7 @@ import axios from "axios";
 export default function SignupCard() {
   const ws = useRef(null);
   const [socketInfo, setSocketInfo] = useState();
-  const [EOA, setEOA] = useState();
+  const [EOA, setEOA] = useState(1);
   const [showStatus, setShowStatus] = useState(false);
 
   // Socket connection should be setup once and only once and closed properly
@@ -116,7 +116,7 @@ export default function SignupCard() {
     //     blockNumber: blockNumber.data,
     //     recoveryContract: recoveryAddress?.toString(),
     //     userID: socketInfo.userID,
-    //     duration: minBlocks,
+    //     duration: Number(minBlocks),
     //   })
     //   .then((result) => console.log(result.data))
     //   .catch((err) => console.log(err));
@@ -221,7 +221,7 @@ export default function SignupCard() {
                       Recovery Contract: {recoveryAddress?.toString()}
                     </Text>
                     <Text>Minimum Blocks: {minBlocks?.toString()}</Text>
-                    <Text>isActive: {isActive?.toString()}</Text>
+                    <Text>Able to withdraw: {isActive?.toString()}</Text>
                   </VStack>
                   <Stack spacing={10} pt={2}>
                     <Button onClick={() => callFossil()}>
