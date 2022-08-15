@@ -80,7 +80,7 @@ export default function SignupCard() {
             Recovery
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            Anyone can trigger the recovery of a contract
+            Trigger the recovery of assets from your lost account
           </Text>
         </Stack>
         <Box
@@ -92,7 +92,7 @@ export default function SignupCard() {
           <Stack spacing={4}>
             <Stack spacing={4}>
               <FormLabel>
-                Please enter the wallet address you want to recover from:
+                Please enter the address of the EOA you would like to recover:
               </FormLabel>
               <Input
                 type="text"
@@ -103,12 +103,12 @@ export default function SignupCard() {
             {recipient ? (
               <>
                 <VStack>
-                  <Text>Recovery Contract: {recoveryAddress.toString()}</Text>
-                  <Text>Minimum Blocks: {minBlocks.toString()}</Text>
-                  <Text>isActive: {isActive.toString()}</Text>
+                  <Text>Recovery contract: {recoveryAddress.toString()}</Text>
+                  <Text>Minimum blocks: {minBlocks.toString()}</Text>
+                  <Text>Able to withdraw: {isActive.toString()}</Text>
                 </VStack>
                 <Stack spacing={10} pt={2}>
-                  <Button>Call Fossil Api</Button>
+                  <Button>Call Fossil API to request storage proof</Button>
                   <Button>Execute recovery on L2</Button>
                   <Button onClick={() => executeOnL1.write()}>
                     Consume Message on L1
