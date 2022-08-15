@@ -29,16 +29,12 @@ import GatewayContract from "./GatewayContract.json";
 import RecoveryContract from "./RecoveryContract.json";
 import StorageProver from "./StorageProver.json";
 import { addresses } from "./addresses.js";
-<<<<<<< HEAD
 import {
   useContract,
   useStarknetInvoke,
   useStarknet,
 } from "@starknet-react/core";
-=======
-import { useStarknetCall, useStarknetInvoke } from "@starknet-react/core";
 import axios from "axios";
->>>>>>> main
 
 export default function SignupCard() {
   const ws = useRef(null);
@@ -204,13 +200,13 @@ export default function SignupCard() {
                     <Text>isActive: {isActive?.toString()}</Text>
                   </VStack>
                   <Stack spacing={10} pt={2}>
-                  <Button onClick={() => callFossil()}>
-                    Call Fossil API to request storage proof
-                  </Button>
-                  {showStatus ? (
-                    <Text>Status: {socketInfo?.message}</Text>
-                  ) : null}
-                  <Button>Execute recovery on L2</Button>
+                    <Button onClick={() => callFossil()}>
+                      Call Fossil API to request storage proof
+                    </Button>
+                    {showStatus ? (
+                      <Text>Status: {socketInfo?.message}</Text>
+                    ) : null}
+                    <Button>Execute recovery on L2</Button>
                     <Button onClick={() => executeOnL2()}>
                       Execute recovery on L2
                     </Button>
