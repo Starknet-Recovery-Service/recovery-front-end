@@ -15,7 +15,8 @@ import {
   useColorModeValue,
   Link,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { useContractRead, useNetwork, erc20ABI, useContractWrite } from "wagmi";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import GatewayContract from "./GatewayContract.json";
@@ -24,7 +25,34 @@ import { addresses } from "./addresses.js";
 import { useStarknetCall, useStarknetInvoke } from "@starknet-react/core";
 
 export default function SignupCard() {
+  const ws = useRef(null);
+  const [socketReady, setSocketReady] = useState(false);
   const [EOA, setEOA] = useState();
+
+  // Socket connection should be setup once and only once and closed properly
+  useEffect(() => {
+    ws.current = new W3CWebSocket("ws:/localhost:3009");
+
+    ws.current.onopen = () => {
+      console.log("Socket opened");
+    };
+
+    ws.current.onclose = () => {
+      console.log("Socket closed");
+    };
+
+    ws.current.onmessage = (message) => {
+      const data = JSON.parse(message.data);
+      console.log(data);
+    };
+
+    const wsCurrent = ws.current;
+
+    return () => {
+      wsCurrent.close();
+    };
+  }, []);
+
   const { data: recoveryAddress, refetch: refetchAddress } = useContractRead({
     addressOrName: addresses.GateWayContractAddress,
     contractInterface: GatewayContract,
