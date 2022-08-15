@@ -55,7 +55,7 @@ export default function SignupCard() {
     addressOrName: addresses.GateWayContractAddress,
     contractInterface: GatewayContract,
     functionName: "receiveFromStorageProver",
-    args: [EOA, minBlocks, ""],
+    args: [EOA, minBlocks],
   });
 
   // const readNameRes = useStarknetCall({

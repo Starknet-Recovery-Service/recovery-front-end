@@ -61,28 +61,15 @@ export default function SignupCard() {
     args: [EOA, recoveryAddress],
   });
 
-  const claimUSDC = useContractWrite({
+  const claimAssets = useContractWrite({
     mode: "recklesslyUnprepared",
-    addressOrName: dummyCoins["USDC"],
-    contractInterface: erc20ABI,
-    functionName: "transfer",
-    args: [recipient, usdcBalance],
-  });
-
-  const claimUNI = useContractWrite({
-    mode: "recklesslyUnprepared",
-    addressOrName: dummyCoins["UNI"],
-    contractInterface: erc20ABI,
-    functionName: "transfer",
-    args: [recipient, uniBalance],
-  });
-
-  const claimWETH = useContractWrite({
-    mode: "recklesslyUnprepared",
-    addressOrName: dummyCoins["WETH"],
-    contractInterface: erc20ABI,
-    functionName: "transfer",
-    args: [recipient, wethBalance],
+    addressOrName: recoveryAddress,
+    contractInterface: RecoveryContract,
+    functionName: "claimAssets",
+    args: [
+      [dummyCoins["USDC"], dummyCoins["UNI"], dummyCoins["WETH"]],
+      recipient,
+    ],
   });
 
   return (
@@ -129,20 +116,20 @@ export default function SignupCard() {
                   <Text>
                     {usdcBalance && (usdcBalance / 1e18).toString()} USDC
                   </Text>
-                  <Button onClick={() => claimUSDC.write()}>Claim USDC</Button>
                 </HStack>
                 <HStack>
                   <Text>
                     {uniBalance && (uniBalance / 1e18).toString()} UNI
                   </Text>
-                  <Button onClick={() => claimUNI.write()}>Claim UNI</Button>
                 </HStack>
                 <HStack>
                   <Text>
                     {wethBalance && (wethBalance / 1e18).toString()} WETH
                   </Text>
-                  <Button onClick={() => claimWETH.write()}>Claim WETH</Button>
                 </HStack>
+                <Button onClick={() => claimAssets.write()}>
+                  Claim Assets
+                </Button>
               </VStack>
             </>
           ) : null}
