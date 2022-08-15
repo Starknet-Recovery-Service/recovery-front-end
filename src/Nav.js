@@ -106,8 +106,6 @@ export default function Simple({ setPage }) {
                     }
                   </MenuButton>
                   <MenuList>
-                    <MenuItem>Profile</MenuItem>
-                    <MenuDivider />
                     <MenuItem onClick={() => disconnect()}>Disconnect</MenuItem>
                   </MenuList>
                 </Menu>
