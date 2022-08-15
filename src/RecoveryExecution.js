@@ -40,8 +40,6 @@ export default function SignupCard() {
   const ws = useRef(null);
   const [socketInfo, setSocketInfo] = useState();
   const [EOA, setEOA] = useState();
-  const [blockStart, setBlockStart] = useState();
-  const [blockEnd, setBlockEnd] = useState();
   const [showStatus, setShowStatus] = useState(false);
 
   // Socket connection should be setup once and only once and closed properly
@@ -108,12 +106,46 @@ export default function SignupCard() {
 
   const callFossil = () => {
     console.log("called");
+    console.log(socketInfo);
+    console.log(socketInfo?.userID);
     setShowStatus(true);
+    // axios
+    //   .post("http://localhost:3009/callFossil", {
+    //     blockNumber: blockNumber.data,
+    //     recoveryContract: recoveryAddress?.toString(),
+    //     userID: socketInfo.userID,
+    //     duration: minBlocks,
+    //   })
+    //   .then((result) => console.log(result.data))
+    //   .catch((err) => console.log(err));
+    const request1 = {
+      originChain: "ethereum",
+      destinationChain: "starknet",
+      block: blockNumber,
+      useNonce: true,
+      webhook: {},
+    };
+    const request2 = {
+      originChain: "ethereum",
+      destinationChain: "starknet",
+      block: blockNumber - minBlocks,
+      useNonce: true,
+      webhook: {},
+    };
+
     axios
-      .post("http://localhost:3009/callFossil", {
-        blockNumber: blockNumber.data,
-        recoveryContract: recoveryAddress?.toString(),
-      })
+      .post(
+        "https://d9b8-2001-8a0-6a40-7200-e1d2-36fe-dfd7-838f.eu.ngrok.io",
+        request1
+      )
+      .then((result) => console.log(result.data))
+      .catch((err) => console.log(err));
+
+    axios
+      .post(
+        "https://d9b8-2001-8a0-6a40-7200-e1d2-36fe-dfd7-838f.eu.ngrok.io",
+        request2
+      )
       .then((result) => console.log(result.data))
       .catch((err) => console.log(err));
   };
@@ -131,9 +163,9 @@ export default function SignupCard() {
   });
 
   const executeOnL2 = () => {
-    console.log(BigInt(EOA).toString(), blockStart, blockEnd);
+    console.log(BigInt(EOA).toString(), blockNumber - minBlocks, blockNumber);
     invoke({
-      args: [BigInt(EOA).toString(), blockStart, blockEnd],
+      args: [BigInt(EOA).toString(), blockNumber - minBlocks, blockNumber],
       metadata: { method: "prove_balance_unchanged" },
     });
   };
