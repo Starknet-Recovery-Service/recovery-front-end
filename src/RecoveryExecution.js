@@ -15,23 +15,67 @@ import {
   useColorModeValue,
   Link,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { useContractRead, useNetwork, erc20ABI, useContractWrite } from "wagmi";
+import { useState, useRef, useEffect } from "react";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+import {
+  useContractRead,
+  useNetwork,
+  useBlockNumber,
+  erc20ABI,
+  useContractWrite,
+} from "wagmi";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import GatewayContract from "./GatewayContract.json";
 import RecoveryContract from "./RecoveryContract.json";
 import StorageProver from "./StorageProver.json";
 import { addresses } from "./addresses.js";
+<<<<<<< HEAD
 import {
   useContract,
   useStarknetInvoke,
   useStarknet,
 } from "@starknet-react/core";
+=======
+import { useStarknetCall, useStarknetInvoke } from "@starknet-react/core";
+import axios from "axios";
+>>>>>>> main
 
 export default function SignupCard() {
+  const ws = useRef(null);
+  const [socketInfo, setSocketInfo] = useState();
   const [EOA, setEOA] = useState();
   const [blockStart, setBlockStart] = useState();
   const [blockEnd, setBlockEnd] = useState();
+  const [showStatus, setShowStatus] = useState(false);
+
+  // Socket connection should be setup once and only once and closed properly
+  useEffect(() => {
+    ws.current = new W3CWebSocket("ws:/localhost:3009");
+
+    ws.current.onopen = () => {
+      console.log("Socket opened");
+    };
+
+    ws.current.onclose = () => {
+      console.log("Socket closed");
+    };
+
+    ws.current.onmessage = (message) => {
+      const data = message.data;
+      setSocketInfo(JSON.parse(data));
+      console.log(data);
+    };
+
+    const wsCurrent = ws.current;
+
+    return () => {
+      wsCurrent.close();
+    };
+  }, []);
+
+  const blockNumber = useBlockNumber({
+    chainId: 5,
+  });
 
   const { data: recoveryAddress, refetch: refetchAddress } = useContractRead({
     addressOrName: addresses.GateWayContractAddress,
@@ -66,14 +110,17 @@ export default function SignupCard() {
     args: [EOA, minBlocks],
   });
 
-  // const readNameRes = useStarknetCall({
-  //   contract,
-  //   method: "sns_lookup_name_to_adr",
-  //   args: [encodeNameAsFelt(search)],
-  //   options: {
-  //     watch: true,
-  //   },
-  // });
+  const callFossil = () => {
+    console.log("called");
+    setShowStatus(true);
+    axios
+      .post("http://localhost:3009/callFossil", {
+        blockNumber: blockNumber.data,
+        recoveryContract: recoveryAddress?.toString(),
+      })
+      .then((result) => console.log(result.data))
+      .catch((err) => console.log(err));
+  };
 
   const { account } = useStarknet();
 
@@ -108,7 +155,7 @@ export default function SignupCard() {
             Recovery
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            Anyone can trigger the recovery of a contract
+            Trigger the recovery of assets from your lost account
           </Text>
         </Stack>
         <Box
@@ -157,7 +204,13 @@ export default function SignupCard() {
                     <Text>isActive: {isActive?.toString()}</Text>
                   </VStack>
                   <Stack spacing={10} pt={2}>
-                    <Button>Call Fossil Api</Button>
+                  <Button onClick={() => callFossil()}>
+                    Call Fossil API to request storage proof
+                  </Button>
+                  {showStatus ? (
+                    <Text>Status: {socketInfo?.message}</Text>
+                  ) : null}
+                  <Button>Execute recovery on L2</Button>
                     <Button onClick={() => executeOnL2()}>
                       Execute recovery on L2
                     </Button>
