@@ -101,13 +101,15 @@ export default function SignupCard() {
     addressOrName: addresses.GateWayContractAddress,
     contractInterface: GatewayContract,
     functionName: "receiveFromStorageProver",
-    args: [EOA, minBlocks],
+    args: [BigInt(EOA), Number(minBlocks)],
   });
 
   const callFossil = () => {
     console.log("called");
     console.log(socketInfo);
     console.log(socketInfo?.userID);
+    console.log(blockNumber.data);
+    console.log(blockNumber.data - Number(minBlocks));
     setShowStatus(true);
     // axios
     //   .post("http://localhost:3009/callFossil", {
@@ -121,14 +123,14 @@ export default function SignupCard() {
     const request1 = {
       originChain: "ethereum",
       destinationChain: "starknet",
-      block: blockNumber,
+      block: blockNumber.data,
       useNonce: true,
       webhook: {},
     };
     const request2 = {
       originChain: "ethereum",
       destinationChain: "starknet",
-      block: blockNumber - minBlocks,
+      block: blockNumber.data - Number(minBlocks),
       useNonce: true,
       webhook: {},
     };
@@ -163,9 +165,17 @@ export default function SignupCard() {
   });
 
   const executeOnL2 = () => {
-    console.log(BigInt(EOA).toString(), blockNumber - minBlocks, blockNumber);
+    console.log(
+      BigInt(EOA).toString(),
+      blockNumber.data - Number(minBlocks),
+      blockNumber.data
+    );
     invoke({
-      args: [BigInt(EOA).toString(), blockNumber - minBlocks, blockNumber],
+      args: [
+        BigInt(EOA).toString(),
+        blockNumber.data - Number(minBlocks),
+        blockNumber.data,
+      ],
       metadata: { method: "prove_balance_unchanged" },
     });
   };
@@ -218,7 +228,13 @@ export default function SignupCard() {
                       Call Fossil API to request storage proof
                     </Button>
                     {showStatus ? (
-                      <Text>Status: {socketInfo?.message}</Text>
+                      <>
+                        <Text>Status: {socketInfo?.message}</Text>
+                        <Text>
+                          blockstart: {blockNumber?.data - Number(minBlocks)}
+                        </Text>
+                        <Text>blockend: {blockNumber?.data}</Text>
+                      </>
                     ) : null}
                     <Button onClick={() => executeOnL2()}>
                       Execute recovery on L2
