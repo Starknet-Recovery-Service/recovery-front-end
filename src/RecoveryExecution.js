@@ -35,6 +35,7 @@ export default function SignupCard() {
   const ws = useRef(null);
   const [socketInfo, setSocketInfo] = useState();
   const [EOA, setEOA] = useState();
+  const [showStatus, setShowStatus] = useState(false);
 
   // Socket connection should be setup once and only once and closed properly
   useEffect(() => {
@@ -100,6 +101,7 @@ export default function SignupCard() {
 
   const callFossil = () => {
     console.log("called");
+    setShowStatus(true);
     axios
       .post("http://localhost:3009/callFossil", {
         blockNumber: blockNumber.data,
@@ -153,6 +155,9 @@ export default function SignupCard() {
                   <Button onClick={() => callFossil()}>
                     Call Fossil API to request storage proof
                   </Button>
+                  {showStatus ? (
+                    <Text>Status: {socketInfo?.message}</Text>
+                  ) : null}
                   <Button>Execute recovery on L2</Button>
                   <Button onClick={() => executeOnL1.write()}>
                     Consume Message on L1
