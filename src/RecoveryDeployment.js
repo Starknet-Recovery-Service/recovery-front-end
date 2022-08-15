@@ -42,11 +42,11 @@ export default function SignupCard() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Recovery Deployment
+            Deploy Recovery Contract
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            Please deploy a recovery contract for your EOA account using your
-            Ethereum wallet.
+            Deploy a recovery contract which can be used to recover your funds
+            in case you lose your account details.
           </Text>
         </Stack>
         <Box
@@ -57,7 +57,9 @@ export default function SignupCard() {
         >
           <Stack spacing={4}>
             <FormControl id="recovery-address" isRequired>
-              <FormLabel>Specify Recovery Address</FormLabel>
+              <FormLabel>
+                Specify recovery address (account to send lost funds to)
+              </FormLabel>
               <Input
                 type="text"
                 placeholder="0x...abc"
@@ -77,8 +79,13 @@ export default function SignupCard() {
               />
             </FormControl>
             <Text align="left" as="i">
-              1 block is around 13 seconds on Ethereum. 2.5m blocks roughly
-              equals to 1 year.
+              This is the minimum amount of time that your account must be left
+              idle (i.e. no outgoing transactions) before it is deemed to be
+              lost and the recovery process can be initiated.
+            </Text>
+            <Text align="left" as="i">
+              Please note that 1 block is around 13 seconds on Ethereum. 2.5m
+              blocks roughly equals to 1 year.
             </Text>
             <Stack spacing={10} pt={2}>
               <Button
@@ -100,7 +107,7 @@ export default function SignupCard() {
             <Stack pt={6}>
               <Text align={"center"}>
                 Already deployed a recovery contract? Give token allowance to
-                the recovery contract.
+                the recovery contract using the 'Allowance' page.
               </Text>
             </Stack>
           </Stack>

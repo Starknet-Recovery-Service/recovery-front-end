@@ -18,6 +18,7 @@ import { useState, useEffect } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useContractRead, useNetwork, erc20ABI, useContractWrite } from "wagmi";
 import GatewayContract from "./GatewayContract.json";
+import RecoveryContract from "./RecoveryContract.json";
 import { dummyCoins } from "./mappings";
 import { addresses } from "./addresses.js";
 
@@ -30,6 +31,13 @@ export default function SignupCard() {
     functionName: "eoaToRecoveryContract",
     args: [recipient],
   });
+
+  const { data: recoveryRecipient, refetch: refetchRecoveryRecipient } =
+    useContractRead({
+      addressOrName: address,
+      contractInterface: RecoveryContract,
+      functionName: "recipient",
+    });
 
   const { data: usdcBalance, refetch: fetchUsdcBalance } = useContractRead({
     addressOrName: dummyCoins["USDC"],
@@ -89,8 +97,9 @@ export default function SignupCard() {
             Allowance
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            Select the currency you would like to give allowance to the recovery
-            contract
+            Specify the ERC20 assets that you would like to recover. Your
+            deployed recovery contract will be given allowance over these
+            assets.
           </Text>
         </Stack>
         <Box
@@ -101,7 +110,7 @@ export default function SignupCard() {
         >
           <Stack spacing={4}>
             <FormLabel>
-              Please enter the EOA you would like to recover:
+              Please enter the address of the EOA you would like to protect:
             </FormLabel>
             <Input
               type="text"
@@ -118,8 +127,11 @@ export default function SignupCard() {
             {address &&
             address !== "0x0000000000000000000000000000000000000000" ? (
               <>
-                <Text>Here's the existing recovery contract:</Text>
+                <Text>Deployed recovery contract:</Text>
                 <Text>{address && address.toString()}</Text>
+                <Text mt="5">Recipient of the recovery contract:</Text>
+                <Text>{recoveryRecipient && recoveryRecipient.toString()}</Text>
+                <Text>Available balances for approval:</Text>
                 <HStack>
                   <Text>
                     {usdcBalance && (usdcBalance / 1e18).toString()} USDC
