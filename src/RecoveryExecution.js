@@ -17,16 +17,23 @@ import {
 } from "@chakra-ui/react";
 import { useState, useRef, useEffect } from "react";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-import { useContractRead, useNetwork, erc20ABI, useContractWrite } from "wagmi";
+import {
+  useContractRead,
+  useNetwork,
+  useBlockNumber,
+  erc20ABI,
+  useContractWrite,
+} from "wagmi";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import GatewayContract from "./GatewayContract.json";
 import RecoveryContract from "./RecoveryContract.json";
 import { addresses } from "./addresses.js";
 import { useStarknetCall, useStarknetInvoke } from "@starknet-react/core";
+import axios from "axios";
 
 export default function SignupCard() {
   const ws = useRef(null);
-  const [socketReady, setSocketReady] = useState(false);
+  const [socketInfo, setSocketInfo] = useState();
   const [EOA, setEOA] = useState();
 
   // Socket connection should be setup once and only once and closed properly
@@ -42,7 +49,8 @@ export default function SignupCard() {
     };
 
     ws.current.onmessage = (message) => {
-      const data = JSON.parse(message.data);
+      const data = message.data;
+      setSocketInfo(JSON.parse(data));
       console.log(data);
     };
 
@@ -52,6 +60,10 @@ export default function SignupCard() {
       wsCurrent.close();
     };
   }, []);
+
+  const blockNumber = useBlockNumber({
+    chainId: 5,
+  });
 
   const { data: recoveryAddress, refetch: refetchAddress } = useContractRead({
     addressOrName: addresses.GateWayContractAddress,
@@ -86,14 +98,16 @@ export default function SignupCard() {
     args: [EOA, minBlocks],
   });
 
-  // const readNameRes = useStarknetCall({
-  //   contract,
-  //   method: "sns_lookup_name_to_adr",
-  //   args: [encodeNameAsFelt(search)],
-  //   options: {
-  //     watch: true,
-  //   },
-  // });
+  const callFossil = () => {
+    console.log("called");
+    axios
+      .post("http://localhost:3009/callFossil", {
+        blockNumber: blockNumber.data,
+        recoveryContract: recoveryAddress?.toString(),
+      })
+      .then((result) => console.log(result.data))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Flex
@@ -136,7 +150,9 @@ export default function SignupCard() {
                   <Text>Able to withdraw: {isActive?.toString()}</Text>
                 </VStack>
                 <Stack spacing={10} pt={2}>
-                  <Button>Call Fossil API to request storage proof</Button>
+                  <Button onClick={() => callFossil()}>
+                    Call Fossil API to request storage proof
+                  </Button>
                   <Button>Execute recovery on L2</Button>
                   <Button onClick={() => executeOnL1.write()}>
                     Consume Message on L1
