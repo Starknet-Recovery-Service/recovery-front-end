@@ -1,5 +1,5 @@
 import React from "react";
-import { HStack, Box, Button, Text } from "@chakra-ui/react";
+import { HStack, Box, Button, Text, Link } from "@chakra-ui/react";
 
 export default function About() {
   const addTicker = async (ticker) => {
@@ -43,6 +43,34 @@ export default function About() {
   };
   return (
     <div>
+      <Box mt="5">
+        <Text>
+          StarkNet Recovery Service (SRS) is a fully trustless wallet recovery
+          service for Ethereum L1 EOAs, powered by storage proofs on StarkNet.
+          Unlike social recovery and other off-chain methods for wallet
+          retrieval, SRS runs in an entirely trustless, non-custodial way. This
+          allows users to build more fault tolerant wallet setups, while
+          retaining the strong security guarantees of Ethereum.
+        </Text>
+        <Box mt="5">
+          <Text>
+            <Link
+              target="_blank"
+              href="https://github.com/Starknet-Recovery-Service"
+            >
+              Github
+            </Link>
+          </Text>
+          <Text>
+            <Link
+              target="_blank"
+              href="https://app.pitch.com/app/presentation/09ce2e68-01a6-42e2-a195-f5e548aea711/06a878ce-878b-4a1f-9be1-9e125372f4f4/4566340e-b395-453e-bba3-35bd938f0e9b"
+            >
+              Presentation
+            </Link>
+          </Text>
+        </Box>
+      </Box>
       <Box mt="5">
         <Text>USDC: 0xf3D16db53cFCee5d26EE29cDeeaa49215A21d345</Text>
         <Text>UNI: 0x3E1722c57f5439b5279bA7Bd9Db37f667eAF2Bc9</Text>
