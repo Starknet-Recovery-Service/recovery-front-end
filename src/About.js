@@ -1,5 +1,14 @@
 import React from "react";
-import { VStack, HStack, Box, Button, Text, Link } from "@chakra-ui/react";
+import {
+  VStack,
+  HStack,
+  Box,
+  Button,
+  Text,
+  Link,
+  useColorModeValue,
+  Flex,
+} from "@chakra-ui/react";
 
 export default function About() {
   const addTicker = async (ticker) => {
@@ -42,7 +51,11 @@ export default function About() {
     }
   };
   return (
-    <div>
+    <Flex
+      bg={useColorModeValue("gray.50", "gray.800")}
+      flexDirection="column"
+      minH={"100vh"}
+    >
       <Box mt="5" justifyContent="center" align="center">
         <Text fontWeight="bold" fontSize="2xl">
           Starknet Recovery Service
@@ -105,6 +118,6 @@ export default function About() {
         </Link>{" "}
         during the Starknet House Hackathon 2022.
       </Text>
-    </div>
+    </Flex>
   );
 }
