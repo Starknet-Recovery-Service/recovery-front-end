@@ -1,6 +1,5 @@
 const addresses = {
-  L2StorageProverAddress: "",
-  GateWayContractAddress: "0xCA772d547237ea000E5b2C3Ea5067b4b2412Af48",
+  GateWayContractAddress: "0x4D50329f7389cd1C0C9E79842e0d49d8Febf1020",
 };
 
 export { addresses };

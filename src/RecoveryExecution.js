@@ -55,7 +55,7 @@ export default function SignupCard() {
     addressOrName: addresses.GateWayContractAddress,
     contractInterface: GatewayContract,
     functionName: "receiveFromStorageProver",
-    args: [EOA, minBlocks, ""],
+    args: [EOA, minBlocks],
   });
 
   // const readNameRes = useStarknetCall({
@@ -103,9 +103,9 @@ export default function SignupCard() {
             {recipient ? (
               <>
                 <VStack>
-                  <Text>Recovery Contract: {recoveryAddress.toString()}</Text>
-                  <Text>Minimum Blocks: {minBlocks.toString()}</Text>
-                  <Text>isActive: {isActive.toString()}</Text>
+                  <Text>Recovery Contract: {recoveryAddress?.toString()}</Text>
+                  <Text>Minimum Blocks: {minBlocks?.toString()}</Text>
+                  <Text>isActive: {isActive?.toString()}</Text>
                 </VStack>
                 <Stack spacing={10} pt={2}>
                   <Button>Call Fossil Api</Button>
