@@ -27,7 +27,7 @@ import Identicon from "identicon.js";
 
 const Links = ["Deployment", "Allowance", "Recovery", "Claim", "About"];
 
-const NavLink = ({ children, setPage }: { children: ReactNode }) => (
+const NavLink = ({ children, setPage }) => (
   <Link
     px={2}
     py={1}
@@ -57,7 +57,7 @@ export default function Simple({ setPage }) {
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} px="24">
+      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -67,7 +67,7 @@ export default function Simple({ setPage }) {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Box fontWeight="bold">Starknet Recovery</Box>
+            <Box fontWeight="bold">💸 Starknet Recovery Service</Box>
             <HStack
               as={"nav"}
               spacing={4}
