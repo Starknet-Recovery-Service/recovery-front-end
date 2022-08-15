@@ -67,7 +67,7 @@ export default function Simple({ setPage }) {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Box fontWeight="bold">Starknet Recovery Service</Box>
+            <Box fontWeight="bold">💸 Starknet Recovery Service</Box>
             <HStack
               as={"nav"}
               spacing={4}
