@@ -174,24 +174,6 @@ export default function SignupCard() {
               </Stack>
               {recipient ? (
                 <>
-                  <Text align="left">
-                    Specify Block End (must be within 256 blocks of latest
-                    block):{" "}
-                  </Text>
-                  <Input
-                    type="text"
-                    placeholder="16000000"
-                    onChange={(e) => setBlockEnd(e.target.value)}
-                  />
-                  <Text align="left">
-                    Specify Block Start (must be within `$
-                    {minBlocks?.toString()}` blocks of Block End):{" "}
-                  </Text>
-                  <Input
-                    type="text"
-                    placeholder="15000000"
-                    onChange={(e) => setBlockStart(e.target.value)}
-                  />
                   <VStack>
                     <Text>
                       Recovery Contract: {recoveryAddress?.toString()}
@@ -206,7 +188,6 @@ export default function SignupCard() {
                     {showStatus ? (
                       <Text>Status: {socketInfo?.message}</Text>
                     ) : null}
-                    <Button>Execute recovery on L2</Button>
                     <Button onClick={() => executeOnL2()}>
                       Execute recovery on L2
                     </Button>
