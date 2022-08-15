@@ -103,9 +103,9 @@ export default function SignupCard() {
             {recipient ? (
               <>
                 <VStack>
-                  <Text>Recovery contract: {recoveryAddress.toString()}</Text>
-                  <Text>Minimum blocks: {minBlocks.toString()}</Text>
-                  <Text>Able to withdraw: {isActive.toString()}</Text>
+                  <Text>Recovery contract: {recoveryAddress?.toString()}</Text>
+                  <Text>Minimum blocks: {minBlocks?.toString()}</Text>
+                  <Text>Able to withdraw: {isActive?.toString()}</Text>
                 </VStack>
                 <Stack spacing={10} pt={2}>
                   <Button>Call Fossil API to request storage proof</Button>
